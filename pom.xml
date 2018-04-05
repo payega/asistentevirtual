@@ -115,6 +115,19 @@
             <version>2.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Introducido por mi -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.46</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -142,6 +155,13 @@
                                 <exclude>**/it/**</exclude>
                             </excludes>
                             <reportsDirectory>${project.build.directory}/test-reports/unit</reportsDirectory>
+                            <systemPropertyVariables>
+                                <user>avaeat</user>
+                                <pass>internet</pass>
+                                <port>3306</port>
+                                <database>watsonws</database>
+                                <servername>localhost</servername>
+                            </systemPropertyVariables>
                         </configuration>
                     </execution>
                 </executions>
@@ -198,6 +218,18 @@
                           <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/resources/asm</outputDirectory>
                           <includeGroupIds>org.ow2.asm</includeGroupIds>
                           <includeArtifactIds>asm,asm-commons</includeArtifactIds>
+                      </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-jdbc-connector</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                          <stripVersion>true</stripVersion>
+                          <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/mysql</outputDirectory>
+                          <includeArtifactIds>mysql-connector-java</includeArtifactIds>
                       </configuration>
                     </execution>
                 </executions>
