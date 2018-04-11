@@ -13,3 +13,4 @@
 .*.swp
 .DS_Store
 /src/main/liberty/config/server.env
+/.apt_generated/

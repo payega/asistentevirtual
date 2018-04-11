@@ -124,11 +124,6 @@ public class AsistenteVirtual extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpsURLConnection conexion;
 		try {
-			Enumeration<String> params = request.getParameterNames(); 
-			while(params.hasMoreElements()){
- 				String paramName = params.nextElement();
- 				System.out.println("Parameter Name - "+paramName+", Value - "+request.getParameter(paramName));
-			}
 			String ambito=request.getParameter("ambito");
 			System.out.println("*********** " + ambito);
 	        config=new ConfiguracionWatson(ambito);

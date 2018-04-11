@@ -7,14 +7,16 @@
         <feature>localConnector-1.0</feature>
     </featureManager>
 
-	<library id="MySQLLib">    
-  	    <fileset dir="${shared.resource.dir}/mysql" includes="*.jar"/>
-	</library>
-
-  	<dataSource id="DSms" jndiName="jdbc/DS" transactional="false" type="javax.sql.DataSource">
-        <jdbcDriver libraryRef="MySQLLib"/>
-        <properties databaseName="${env.database}" password="${env.pass}" portNumber="${env.port}" serverName="${env.servername}" user="${env.user}"/>
+	<jdbcDriver id="MySQL" libraryRef="MySQLLib" javax.sql.ConnectionPoolDataSource="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
+      	<library id="MySQLLib">    
+  	   		<file name="${server.config.dir}/resources/mysql/mysql-connector-java.jar" />
+		</library>
+	</jdbcDriver>
+  	<dataSource id="DSms" jndiName="jdbc/DS" transactional="false" jdbcDriverRef="MySQL" >
+        <properties databaseName="${env.database}" password="${env.pass}" portNumber="${env.port}" serverName="${env.servername}" user="${env.user}" useSSL="false"/>
     </dataSource>
+    
+    
     <!-- To allow access to this server from a remote client host="*" has been added to the following element -->
     <httpEndpoint id="defaultHttpEndpoint"
                   host="*"

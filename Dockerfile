@@ -1,5 +1,15 @@
 FROM websphere-liberty:webProfile7
 MAINTAINER IBM Java engineering at IBM Cloud
+ARG servername=192.168.99.100
+ARG port=3306
+ARG user=root
+ARG pass=password
+ARG database=watson
+ENV servername=$servername
+ENV port=$port
+ENV user=$user
+ENV pass=$pass
+ENV database=$database
 COPY /target/liberty/wlp/usr/servers/defaultServer /config/
 COPY /target/liberty/wlp/usr/shared/resources /config/resources/
 COPY /src/main/liberty/config/jvmbx.options /config/jvm.options

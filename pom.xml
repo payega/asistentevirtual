@@ -228,46 +228,13 @@
                         </goals>
                         <configuration>
                           <stripVersion>true</stripVersion>
-                          <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources/mysql</outputDirectory>
+                          <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/resources/mysql</outputDirectory>
                           <includeArtifactIds>mysql-connector-java</includeArtifactIds>
                       </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!-- Plugin to run functional tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18.1</version>
-                <executions>
-                    <execution>
-                        <phase>integration-test</phase>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                        <configuration>
-                            <includes>
-                                <include>**/it/**</include>
-                            </includes>
-                            <systemPropertyVariables>
-                                <liberty.test.port>${testServerHttpPort}</liberty.test.port>
-                                <war.context>${warContext}</war.context>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>verify-results</id>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <summaryFile>${project.build.directory}/test-reports/it/failsafe-summary.xml</summaryFile>
-                    <reportsDirectory>${project.build.directory}/test-reports/it</reportsDirectory>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
 
