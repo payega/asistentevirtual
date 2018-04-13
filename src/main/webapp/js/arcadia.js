@@ -22,8 +22,10 @@ function validar()
 function procesar(peticion)
 {
 	var json=JSON.parse(peticion);
+	var contexto=document.getElementById("contexto");
+	contexto.value=JSON.stringify(json.context);
 	var chat=document.getElementById("textoChat");
-	chat.append(json.output.text[0]);
+	chat.innerHTML+="<span style=\"text:red\">AEAT:</span>"+json.output.text[0]+"<br>";
 }
 function getAjax (url,success)
 {
@@ -52,6 +54,15 @@ function postAjax(url, data, success) {
     xhr.send(params);
     return xhr;
 }
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 function asignarAmbito(valor)
 {
 	ambito=valor;
@@ -60,19 +71,21 @@ function asignarAmbito(valor)
 }
 function calcularAmbito()
 {
-	getAjax('/AsistenteVirtual/CalcularAmbito',function(data){ asignarAmbito(data)});
+	asignarAmbito(getParameterByName("ambito",location.href));
 }
 function enviarMensaje()
 {
 	var chat=document.getElementById("textoChat");
 	var msg=document.getElementById("textoMensaje").value;
-	postAjax('/AsistenteVirtual/AsistenteVirtual', 'mensaje='+msg, function(data){ procesar(data); });
+	var contexto=document.getElementById("contexto").value;
+	chat.innerHTML+="<span style=\"text:blue\">Usted:</span>"+msg+"<br>";
+	postAjax('/AsistenteVirtual/AsistenteVirtual', 'ambito='+ambito+'&mensaje='+msg+"&contexto="+contexto, function(data){ procesar(data); });
 	
 }
 function iniciarChat()
 {
 	var chat=document.getElementById("textoChat");
-	postAjax('/AsistenteVirtual/AsistenteVirtual', 'mensaje=', function(data){ procesar(data); });
+	postAjax('/AsistenteVirtual/AsistenteVirtual', 'ambito='+ambito+'&mensaje=', function(data){ procesar(data); });
 	
 }
 function crearAsistente()
@@ -85,7 +98,7 @@ function crearAsistente()
 	var divMensaje=document.createElement("div");
 	var botonMensaje=document.createElement("input");
 	var textoMensaje=document.createElement("input");
-	var textoChat=document.createElement("textarea");
+	var textoChat=document.createElement("div");
 	
 	divAvatar.innerHTML="<img src=\"/AsistenteVirtual/img/avatarIVA02Neutra.gif\">";
 	
