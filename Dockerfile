@@ -1,10 +1,10 @@
 FROM websphere-liberty:webProfile7
 MAINTAINER IBM Java engineering at IBM Cloud
-ARG servername=192.168.99.100
+ARG servername=asistentevirtual-mysql
 ARG port=3306
 ARG user=root
 ARG pass=password
-ARG database=watson
+ARG database=watsonws
 ENV servername=$servername
 ENV port=$port
 ENV user=$user
