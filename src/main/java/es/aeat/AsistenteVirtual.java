@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Servlet implementation class AsistenteVirtual
+ * Servlet implementation class AsistenteVirtuall
  */
 @WebServlet("/AsistenteVirtual")
 public class AsistenteVirtual extends HttpServlet {
